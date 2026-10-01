@@ -1,0 +1,6 @@
+[submodule "blitz3d-ng"]
+	path = blitz3d-ng
+	url = https://github.com/blitz3d-ng/blitz3d-ng.git
+[submodule "scpcb"]
+	path = scpcb
+	url = https://github.com/Regalis11/scpcb.git
