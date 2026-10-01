@@ -15,7 +15,9 @@ Set-Location "$root\run"
 $err = "$env:TEMP\scp_err.txt"
 $p = Start-Process -FilePath "$env:blitzpath\bin\blitzcc64.exe" -ArgumentList "-q","-r","opengl","Main.bb" -PassThru -RedirectStandardError $err
 $deadline = (Get-Date).AddSeconds($Seconds)
-while ((Get-Date) -lt $deadline -and -not $p.HasExited) { Start-Sleep 2 }
+$peak = 0
+while ((Get-Date) -lt $deadline -and -not $p.HasExited) { Start-Sleep 2; try { $p.Refresh(); if ($p.WorkingSet64 -gt $peak) { $peak = $p.WorkingSet64 } } catch {} }
+"peak memory: $([int]($peak/1MB)) MB"
 if ($p.HasExited) { $p.WaitForExit(); "exited code $($p.ExitCode)" } else { "still running after ${Seconds}s"; $p.Kill() }
 Get-Content $err | Where-Object { $_ -match "bbEx|fb error|watchdog|exception|^  [A-Za-z0-9_.]+!" } | Select-Object -First 60
 "--- stderr tail ---"

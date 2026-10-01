@@ -5,7 +5,9 @@ Copies the unmodified upstream sources from scpcb/ into run/, applies the small
 platform patches listed in PATCHES, and links the (large) asset folders.
 Upstream is never edited: every divergence from it is visible in this file.
 
-Usage: python tools/prepare_run.py
+Usage: python tools/prepare_run.py [--out DIR] [--no-assets]
+  --out DIR     prepare DIR instead of run/ (e.g. build/switch for the Switch build)
+  --no-assets   do not link the asset folders (the Switch package copies them separately)
 """
 import os
 import re
@@ -16,6 +18,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "scpcb")
 RUN = os.path.join(ROOT, "run")
+LINK_ASSETS = True
 ASSETS = ["Data", "GFX", "SFX", "Loadingscreens"]
 
 # (file, regex, replacement, reason)
@@ -42,6 +45,12 @@ def link_dir(src, dst):
 
 
 def main():
+    global RUN, LINK_ASSETS
+    args = sys.argv[1:]
+    if "--out" in args:
+        RUN = os.path.abspath(args[args.index("--out") + 1])
+    if "--no-assets" in args:
+        LINK_ASSETS = False
     os.makedirs(RUN, exist_ok=True)
     for name in os.listdir(SRC):
         if name.endswith(".bb"):
@@ -49,8 +58,9 @@ def main():
     # Settings are per-checkout: keep an existing run/options.ini.
     if not os.path.exists(os.path.join(RUN, "options.ini")):
         shutil.copyfile(os.path.join(SRC, "options.ini"), os.path.join(RUN, "options.ini"))
-    for d in ASSETS:
-        link_dir(os.path.join(SRC, d), os.path.join(RUN, d))
+    if LINK_ASSETS:
+        for d in ASSETS:
+            link_dir(os.path.join(SRC, d), os.path.join(RUN, d))
 
     failed = False
     for name, pattern, repl, why in PATCHES:

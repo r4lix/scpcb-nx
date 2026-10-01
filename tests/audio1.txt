@@ -1,0 +1,6 @@
+loaded sound=1
+playing(t=0)=1
+playing(t=0.7)=1
+playing(after stop)=0
+music started=1
+music playing=1
