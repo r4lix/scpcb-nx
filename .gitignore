@@ -1,0 +1,5 @@
+run/
+tests/*.exe
+tests/*.bmp
+tests/*.png
+blitz3d-ng/build/

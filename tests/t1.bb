@@ -1,0 +1,3 @@
+Print "hello"
+WaitKey
+End
