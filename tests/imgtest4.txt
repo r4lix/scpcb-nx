@@ -1,0 +1,2 @@
+orig px=FF000000 resized px=000F0F0F
+backbuffer after draw px=FFFF00FF
