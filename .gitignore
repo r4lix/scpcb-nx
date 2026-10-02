@@ -4,3 +4,4 @@ tests/*.bmp
 tests/*.png
 blitz3d-ng/build/
 build/
+"tests/*.wav" 
