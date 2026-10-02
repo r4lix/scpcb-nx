@@ -39,13 +39,13 @@ PATCHES = [
     (
         "Main.bb",
         r'((?:AALoadFont|LoadFont_Strict)\([^\r\n]*?)Int\((\d+) \* \(GraphicHeight / 1024\.0\)\)',
-        r'\1Int(\2 * (GraphicHeight / 1024.0) * RT_SettingF("font_scale", 1.2))',
-        "fonts are 20% larger by default (overlay menu setting font_scale): at 1280x720 on a handheld screen the stock sizes are too small to read",
+        r'\1Int(\2 * (GraphicHeight / 1024.0) * RT_SettingF("font_scale", 1.15))',
+        "fonts are 15% larger by default (overlay menu setting font_scale): at 1280x720 on a handheld screen the stock sizes are too small to read",
     ),
     (
         "Menu.bb",
         r'((?:AALoadFont|LoadFont_Strict)\([^\r\n]*?)Int\((\d+) \* \(GraphicHeight / 1024\.0\)\)',
-        r'\1Int(\2 * (GraphicHeight / 1024.0) * RT_SettingF("font_scale", 1.2))',
+        r'\1Int(\2 * (GraphicHeight / 1024.0) * RT_SettingF("font_scale", 1.15))',
         "same, for the fonts reloaded from the options menu",
     ),
     (
