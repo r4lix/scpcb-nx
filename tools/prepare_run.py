@@ -38,6 +38,42 @@ PATCHES = [
     ),
     (
         "Main.bb",
+        r'((?:AALoadFont|LoadFont_Strict)\([^\r\n]*?)Int\((\d+) \* \(GraphicHeight / 1024\.0\)\)',
+        r'\1Int(\2 * (GraphicHeight / 1024.0) * 1.2)',
+        "fonts are 20% larger: at 1280x720 on a handheld screen the stock sizes are too small to read",
+    ),
+    (
+        "Menu.bb",
+        r'((?:AALoadFont|LoadFont_Strict)\([^\r\n]*?)Int\((\d+) \* \(GraphicHeight / 1024\.0\)\)',
+        r'\1Int(\2 * (GraphicHeight / 1024.0) * 1.2)',
+        "same, for the fonts reloaded from the options menu",
+    ),
+    (
+        "AAText.bb",
+        r'Global AATextEnable% = GetINIInt\(OptionFile, "options", "antialiased text"\)',
+        'Global AATextEnable% = 0 ; antialiased text is off: building its font textures takes minutes on the Switch and toggling it crashed',
+        "antialiased text is disabled on this port",
+    ),
+    (
+        "Main.bb",
+        r'AATextEnable% = DrawTick\(([^\r\n]*?), AATextEnable%\)',
+        r'AATextEnable% = 0 : DrawTick(\1, 0)',
+        "the options tick for antialiased text no longer changes anything",
+    ),
+    (
+        "Menu.bb",
+        r'AATextEnable% = DrawTick\(([^\r\n]*?), AATextEnable%\)',
+        r'AATextEnable% = 0 : DrawTick(\1, 0)',
+        "same, main menu options",
+    ),
+    (
+        "Menu.bb",
+        r'If MouseHit1 Then SelectedInputBox = ID : FlushKeys\r?\n',
+        'If MouseHit1 Then SelectedInputBox = ID : FlushKeys : If RT_HasPrompt() Then Txt = RT_TextPrompt$("Enter text", Txt) : SelectedInputBox = 0 : FlushKeys : FlushMouse\n',
+        "text boxes open the Switch on-screen keyboard (there is no physical keyboard)",
+    ),
+    (
+        "Main.bb",
         r'Local file% = OpenFile\("Credits\.txt"\)',
         'Local file% = ReadFile("Credits.txt")',
         "read-only use, same reason",

@@ -83,6 +83,6 @@ enforce some Horizon file-system rules, so a pass there is not a guarantee on ha
 - First load takes a while (it decodes ~400 textures from the SD card).
 - Textures are capped at 512 px to fit in memory (`BB_TEXTURE_MAX` overrides on PC).
 - Startup videos are skipped; the bump-map layer on floors is ignored.
-- On-screen keyboard is not implemented, so the new-game name stays empty.
+- Text boxes (e.g. the new-game name) open the Switch on-screen keyboard when clicked. The right stick moves the pointer (BB_PAD_SPEED in env.txt changes its speed). Antialiased text is disabled.
 - Some characters/props are loaded when they spawn, which can cause a short hitch.
 - Online / multiplayer is not part of this build.
