@@ -30,6 +30,18 @@ PATCHES = [
         "; fmod.dll / zlibwapi.dll checks removed: those libraries are built into the runtime\n",
         "the DLLs are replaced by the runtime's scpcb compat module",
     ),
+    (
+        "Menu.bb",
+        r'Local f = OpenFile\(file\)',
+        "Local f = ReadFile(file)",
+        "the file is only read; Horizon refuses a second (read) open of a file held open for writing",
+    ),
+    (
+        "Main.bb",
+        r'Local file% = OpenFile\("Credits\.txt"\)',
+        'Local file% = ReadFile("Credits.txt")',
+        "read-only use, same reason",
+    ),
 ]
 
 
