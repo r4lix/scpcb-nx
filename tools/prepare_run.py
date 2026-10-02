@@ -75,7 +75,7 @@ PATCHES = [
     (
         "Main.bb",
         r'(\r?\n)Repeat(\r?\n\t\r?\n\tCls\r?\n\t\r?\n\tCurTime = MilliSecs2\(\))',
-        r'\1Include "Multiplayer.bb"\nInclude "Debug.bb"\n\nRepeat\2',
+        r'\1Include "Multiplayer.bb"\nInclude "Debug.bb"\nInclude "Pad.bb"\n\nRepeat\2',
         "co-op presence prototype (port/Multiplayer.bb)",
     ),
     (
@@ -101,6 +101,18 @@ PATCHES = [
         r'(\t\t\t\t\tIf RandomSeed = "" Then\r?\n\t\t\t\t\t\tRandomSeed = Abs\(MilliSecs\(\)\))',
         '\t\t\t\t\tIf RT_SettingI("mp_mode", 0) > 0 Then\n\t\t\t\t\t\tIf RT_SettingS$("mp_seed", "") <> "" Then RandomSeed = RT_SettingS$("mp_seed", "")\n\t\t\t\t\tEndIf\n' + r'\1',
         "multiplayer: every player uses the shared map seed from the overlay menu",
+    ),
+    (
+        "Main.bb",
+        r'(\n\t\ty = GraphicHeight / 2 - height\r?\n)',
+        r'\1\t\tPadInvReport(MaxItemAmount, y)\n',
+        "gamepad: slot centres of the player inventory (port/Pad.bb)",
+    ),
+    (
+        "Main.bb",
+        r'(\t\ty = GraphicHeight / 2 - \(height \* OtherSize /5 \+ spacing \* \(OtherSize / 5 - 1\)\) / 2;height\r?\n)',
+        r'\1\t\tPadInvReport(OtherSize, y)\n',
+        "gamepad: slot centres of the container inventory",
     ),
     (
         "Main.bb",

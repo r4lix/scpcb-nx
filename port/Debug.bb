@@ -1,6 +1,7 @@
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 ; Debug.bb - test aids for the scpcb-nx port (inactive unless switch_settings.ini says so)
 ;
+;   dbg_inv=1     put three items in the inventory and open it (gamepad inventory navigation test)
 ;   dbg_paper=1   open a document as if it was being read (checks the image resize path)
 ;   dbg_items=1   a couple of seconds into a game, drop a sample of every kind of item on the floor in front of the player,
 ;                 to check how item models and textures render
@@ -8,6 +9,7 @@
 
 Global DBG_Frames% = 0
 Global DBG_Done% = False
+Global DBG_InvDone% = False
 Global DBG_PaperDone% = False
 Global DBG_LookDown% = 0
 
@@ -20,6 +22,20 @@ Function DBG_SpawnItem(name$, tempname$, forward#, side#)
 End Function
 
 Function DBG_Update()
+	If RT_SettingI("dbg_inv", 0) <> 0 And DBG_InvDone = False Then
+		DBG_Frames = DBG_Frames + 1
+		If DBG_Frames > 150 Then
+			DBG_InvDone = True
+			Local dit.Items
+			dit = CreateItem("Document SCP-173", "paper", EntityX(Collider), EntityY(Collider), EntityZ(Collider))
+			PickItem(dit)
+			dit = CreateItem("Level 1 Key Card", "key1", EntityX(Collider), EntityY(Collider), EntityZ(Collider))
+			PickItem(dit)
+			dit = CreateItem("First Aid Kit", "firstaid", EntityX(Collider), EntityY(Collider), EntityZ(Collider))
+			PickItem(dit)
+			InvOpen = True
+		EndIf
+	EndIf
 	If RT_SettingI("dbg_paper", 0) <> 0 And DBG_PaperDone = False Then
 		DBG_Frames = DBG_Frames + 1
 		If DBG_Frames > 150 Then

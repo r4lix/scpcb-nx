@@ -52,6 +52,11 @@ Start it from hbmenu.
 
 A software cursor is drawn in menus because the Switch has none.
 
+**Inventory (and containers such as the clipboard):** the d-pad or left stick jumps between slots.
+Press **A** on an item to pick it up, move to another slot, press **A** again to drop it (no need to
+hold anything); **Y** double-clicks the slot under the cursor (use / equip). The right stick and the
+triggers still work as a free pointer.
+
 ## Settings menu (overlay)
 
 **Hold `-` for about a second** (a short press is still the quick save) to open the settings
