@@ -2,28 +2,36 @@
 
 This is an early port: the game is the unmodified SCP:CB 1.3.11 source, compiled with a
 modified [blitz3d-ng](https://github.com/blitz3d-ng/blitz3d-ng) for the Switch.
-It has **never been run on hardware before**, so expect to send logs back.
+It runs on hardware (Switch Lite tested) and in the Eden emulator; expect rough edges.
 
 ## Install
 
-1. Build the package (Windows):
+**From the release (easiest).** Download `scpcb-switch.zip` from the
+[pre-release](https://github.com/r4lix/scpcb-nx/releases) and extract it to the **root of the SD
+card**. You end up with `sdmc:/switch/scpcb/scpcb.nro`, `options.ini` and the game's `GFX`,
+`SFX`, `Data` and `Loadingscreens` folders (about 300 MB). Extract on a PC if you can; zips with
+backslash paths (e.g. made by PowerShell's `Compress-Archive`) fail on the Switch with
+`FsError_InvalidCharacter`.
 
-   ```
-   powershell -File tools\build_switch.ps1 -Sd E:      # E: = your SD card
-   ```
+**To update only the program** replace `sdmc:/switch/scpcb/scpcb.nro` with the standalone
+`scpcb.nro` from the release (about 9 MB); the assets do not change.
 
-   This creates `E:\switch\scpcb\` containing `scpcb.nro`, `options.ini` and the game's
-   `GFX`, `SFX`, `Data` and `Loadingscreens` folders (about 300 MB).
-   `-Sd` takes any folder, not just a drive: `-Sd C:\some\folder` stages
-   `C:\some\folder\switch\scpcb\`, which you can transfer to the SD card's root afterwards.
-   Without `-Sd` it only builds `build\switch\scpcb.nro`; copy it, `tools\switch_options.ini`
-   (as `options.ini`) and the four asset folders from `scpcb\` yourself.
+**Building it yourself (Windows):**
 
-2. Start it from hbmenu.
+```
+powershell -File tools\build_switch.ps1 -Sd E:      # E: = your SD card
+```
+
+`-Sd` takes any folder, not just a drive: `-Sd C:\some\folder` stages
+`C:\some\folder\switch\scpcb\`, which you can copy to the SD card's root afterwards.
+Without `-Sd` it only builds `build\switch\scpcb.nro`; copy it, `tools\switch_options.ini`
+(as `options.ini`) and the four asset folders from `scpcb\` yourself.
+
+Start it from hbmenu.
 
 **Use title override (hold R while launching a game, then pick hbmenu).** In applet mode
 (launching from the Album) homebrew only gets a few hundred MB, and the game needs about
-1.1 GB once a level is loaded. If it quits straight away that is the first thing to check.
+1.2 GB once a level is loaded. If it quits straight away that is the first thing to check.
 
 ## Controls
 
@@ -48,15 +56,27 @@ A software cursor is drawn in menus because the Switch has none.
 ## When something goes wrong
 
 The game writes **`sdmc:/switch/scpcb/scpcb.log`** and flushes it on every line. Send it back.
-It records the GL version, window sizes, controller name and any runtime error. The game's
-own crash log (if any) is `error_log_*.txt` in the same folder.
+What the lines mean:
 
-Useful things to check in it:
+- `GL Version:` should mention OpenGL ES 3.x; `GL window: 1280x720` is the render size.
+- `[flip N]` appears for the first frames and every 300th, so the log shows how far it got.
+- `[perf]` every 10 s: FPS, worst frame, heap in MB. `[slow]` = a frame over 120 ms.
+  `[slowop]` = a load or sound call over 25 ms, with the file name.
+- `[open failed]` a file could not be opened (the reason is printed).
+- `[bbEx]` a Blitz runtime error (the message follows). `[fatal]` an uncaught error.
+- `[crash]` a hard crash with registers and a backtrace (addresses are relative to `bbStart`).
+- `[texture failed] 'GFX/map/'` with an empty name is normal; the map data lists unused slots.
 
-- `GL Version:` should mention OpenGL ES 3.x. If the line is missing the GL context failed.
-- `gamepad:` shows the controller that was detected.
-- `[fatal] std::terminate` means an uncaught runtime error (the Blitz error text, if any,
-  is printed just above it).
+An optional `env.txt` next to the NRO (`KEY=VALUE` per line) sets debug variables, e.g.
+`BB_SCREENSHOT_EVERY_MS=20000` with `BB_SCREENSHOT_PATH=sdmc:/switch/scpcb/shot` saves BMP
+screenshots, and `BB_INJECT="70000:key:40;80000:move:250,224;80500:click:1"` presses keys and
+clicks at given milliseconds after start (used to drive the emulator without a controller).
+
+## Testing without a console
+
+The Eden emulator runs the NRO. Put the same `switch/scpcb` folder in Eden's `sdmc` directory
+(`%APPDATA%\eden\sdmc` on Windows) and start `eden-cli -g path\to\scpcb.nro`. Eden does not
+enforce some Horizon file-system rules, so a pass there is not a guarantee on hardware.
 
 ## Known limits
 
@@ -64,4 +84,5 @@ Useful things to check in it:
 - Textures are capped at 512 px to fit in memory (`BB_TEXTURE_MAX` overrides on PC).
 - Startup videos are skipped; the bump-map layer on floors is ignored.
 - On-screen keyboard is not implemented, so the new-game name stays empty.
+- Some characters/props are loaded when they spawn, which can cause a short hitch.
 - Online / multiplayer is not part of this build.
