@@ -74,6 +74,36 @@ PATCHES = [
     ),
     (
         "Main.bb",
+        r'(\r?\n)Repeat(\r?\n\t\r?\n\tCls\r?\n\t\r?\n\tCurTime = MilliSecs2\(\))',
+        r'\1Include "Multiplayer.bb"\n\nRepeat\2',
+        "co-op presence prototype (port/Multiplayer.bb)",
+    ),
+    (
+        "Main.bb",
+        r'(UpdateMainMenu\(\)\r?\n\tElse\r?\n)(\t\tUpdateStreamSounds\(\))',
+        r'\1\t\tMP_Update()\n\2',
+        "multiplayer: once per frame while a game is running",
+    ),
+    (
+        "Main.bb",
+        r'\t\tDrawQuickLoading\(\)\r?\n',
+        '\t\tMP_Draw()\n\t\tDrawQuickLoading()\n',
+        "multiplayer: names above the other players",
+    ),
+    (
+        "Main.bb",
+        r'(Function NullGame\(playbuttonsfx%=True\)\r?\n)',
+        r'\1\tMP_Reset()\n',
+        "multiplayer: the figures are deleted with the world",
+    ),
+    (
+        "Menu.bb",
+        r'(\t\t\t\t\tIf RandomSeed = "" Then\r?\n\t\t\t\t\t\tRandomSeed = Abs\(MilliSecs\(\)\))',
+        '\t\t\t\t\tIf RT_SettingI("mp_mode", 0) > 0 Then\n\t\t\t\t\t\tIf RT_SettingS$("mp_seed", "") <> "" Then RandomSeed = RT_SettingS$("mp_seed", "")\n\t\t\t\t\tEndIf\n' + r'\1',
+        "multiplayer: every player uses the shared map seed from the overlay menu",
+    ),
+    (
+        "Main.bb",
         r'Local file% = OpenFile\("Credits\.txt"\)',
         'Local file% = ReadFile("Credits.txt")',
         "read-only use, same reason",
@@ -111,6 +141,11 @@ def main():
             link_dir(os.path.join(SRC, d), os.path.join(RUN, d))
 
     failed = False
+    # files that belong to the port (not to upstream)
+    for name in os.listdir(os.path.join(ROOT, "port")):
+        if name.endswith(".bb"):
+            shutil.copy2(os.path.join(ROOT, "port", name), os.path.join(RUN, name))
+
     for name, pattern, repl, why in PATCHES:
         path = os.path.join(RUN, name)
         with open(path, encoding="latin-1", newline="") as f:

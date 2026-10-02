@@ -65,6 +65,7 @@ toggle), L/R switch tabs, B or + close it; the touchscreen works too. Settings a
 | Controls | pointer/look speed, stick dead zone and response curve, the shortcut that opens the menu (hold `-`, or hold L3+R3) |
 | Display | render resolution, texture size limit, text size (these three apply after a restart), FPS counter |
 | Audio | master volume |
+| Multiplayer | mode (off / host / join), player name, shared map seed, host address, port |
 | System | resume, reset all settings, quit game, GPU/memory info |
 
 On a PC keyboard the menu opens with F10 (arrows, Enter, Esc, Q/E to navigate).
@@ -103,3 +104,17 @@ enforce some Horizon file-system rules, so a pass there is not a guarantee on ha
 - Text boxes (e.g. the new-game name) open the Switch on-screen keyboard when clicked. The right stick moves the pointer (BB_PAD_SPEED in env.txt changes its speed). Antialiased text is disabled.
 - Some characters/props are loaded when they spawn, which can cause a short hitch.
 - Online / multiplayer is not part of this build.
+
+## Multiplayer (early prototype)
+
+Up to four players on the same network. Everybody runs the full game locally; players who start a
+**new game with the same map seed and difficulty** get the same level, so the only thing exchanged is
+where each player is: the others appear as class-D figures with a name tag walking through your copy of
+the level. Doors, items and monsters are **not** synchronised yet.
+
+1. Open the overlay menu, Multiplayer tab. Everyone enters the same *Map seed*.
+2. One player sets *Mode: Host* (the tab shows the console's address and the port).
+3. The others set *Mode: Join*, *Host address* to that address, then start a new game.
+
+Source: `port/Multiplayer.bb` (UDP, host relays states 20 times a second), wired into the game by
+`tools/prepare_run.py`. `tools/mp_test.ps1` runs a host and a guest on one PC for testing.
