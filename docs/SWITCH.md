@@ -14,6 +14,8 @@ It has **never been run on hardware before**, so expect to send logs back.
 
    This creates `E:\switch\scpcb\` containing `scpcb.nro`, `options.ini` and the game's
    `GFX`, `SFX`, `Data` and `Loadingscreens` folders (about 300 MB).
+   `-Sd` takes any folder, not just a drive: `-Sd C:\some\folder` stages
+   `C:\some\folder\switch\scpcb\`, which you can transfer to the SD card's root afterwards.
    Without `-Sd` it only builds `build\switch\scpcb.nro`; copy it, `tools\switch_options.ini`
    (as `options.ini`) and the four asset folders from `scpcb\` yourself.
 

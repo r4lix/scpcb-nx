@@ -1,6 +1,7 @@
 [submodule "blitz3d-ng"]
 	path = blitz3d-ng
-	url = https://github.com/blitz3d-ng/blitz3d-ng.git
+	url = https://github.com/r4lix/blitz3d-ng.git
+	branch = scpcb-nx
 [submodule "scpcb"]
 	path = scpcb
 	url = https://github.com/Regalis11/scpcb.git
