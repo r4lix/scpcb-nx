@@ -75,13 +75,13 @@ PATCHES = [
     (
         "Main.bb",
         r'(\r?\n)Repeat(\r?\n\t\r?\n\tCls\r?\n\t\r?\n\tCurTime = MilliSecs2\(\))',
-        r'\1Include "Multiplayer.bb"\n\nRepeat\2',
+        r'\1Include "Multiplayer.bb"\nInclude "Debug.bb"\n\nRepeat\2',
         "co-op presence prototype (port/Multiplayer.bb)",
     ),
     (
         "Main.bb",
         r'(UpdateMainMenu\(\)\r?\n\tElse\r?\n)(\t\tUpdateStreamSounds\(\))',
-        r'\1\t\tMP_Update()\n\2',
+        r'\1\t\tMP_Update()\n\t\tDBG_Update()\n\2',
         "multiplayer: once per frame while a game is running",
     ),
     (
