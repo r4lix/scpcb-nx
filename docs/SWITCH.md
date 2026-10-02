@@ -51,6 +51,23 @@ Start it from hbmenu.
 | Touchscreen | Mouse (menus) |
 
 A software cursor is drawn in menus because the Switch has none.
+
+## Settings menu (overlay)
+
+**Hold `-` for about a second** (a short press is still the quick save) to open the settings
+overlay, over a frozen copy of the game: the game, its clock and its audio are paused while it
+is open. Navigate with the d-pad (up/down to pick a row, left/right to change it, A to
+toggle), L/R switch tabs, B or + close it; the touchscreen works too. Settings are saved to
+`switch_settings.ini` when it closes.
+
+| Tab | Settings |
+|---|---|
+| Controls | pointer/look speed, stick dead zone and response curve, the shortcut that opens the menu (hold `-`, or hold L3+R3) |
+| Display | render resolution, texture size limit, text size (these three apply after a restart), FPS counter |
+| Audio | master volume |
+| System | resume, reset all settings, quit game, GPU/memory info |
+
+On a PC keyboard the menu opens with F10 (arrows, Enter, Esc, Q/E to navigate).
 "Press any key" screens accept Y, R or A.
 
 ## When something goes wrong
