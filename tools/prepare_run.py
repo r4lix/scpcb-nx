@@ -116,6 +116,18 @@ PATCHES = [
     ),
     (
         "Main.bb",
+        r'(Function MouseOn%\(x%, y%, width%, height%\)\r?\n)',
+        r'\1\tRT_PadMenuRect(x, y, width, height)\n',
+        "gamepad: every clickable rectangle is reported so the d-pad can jump between them",
+    ),
+    (
+        "Main.bb",
+        r'(\nRepeat\r?\n\t\r?\n\tCls\r?\n)',
+        r'\1\tRT_PadMenuBegin()\n',
+        "gamepad: start of a frame's list of clickable rectangles",
+    ),
+    (
+        "Main.bb",
         r'Local file% = OpenFile\("Credits\.txt"\)',
         'Local file% = ReadFile("Credits.txt")',
         "read-only use, same reason",

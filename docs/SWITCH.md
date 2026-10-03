@@ -35,27 +35,41 @@ Start it from hbmenu.
 
 ## Controls
 
-| Switch | Does |
+Button names are the ones printed on the console.
+
+**Playing**
+
+| Button | Does |
 |---|---|
-| Left stick | Walk (W A S D) |
-| Right stick | Look / move the menu pointer |
-| ZR or A | Click / interact |
+| Left stick | Walk |
+| Right stick | Look around |
+| ZR or A | Interact / click |
 | ZL | Right click |
-| Y or R | Blink (Space) |
-| L or left-stick click | Sprint (Shift) |
-| B | Crouch (Ctrl) |
-| X | Inventory (Tab) |
-| + | Pause / back (Esc) |
-| − | Quick save (F5) |
-| D-pad | Arrow keys |
-| Touchscreen | Mouse (menus) |
+| L or left-stick click | Sprint |
+| R or Y | Blink |
+| B | Crouch |
+| X | Open / close the inventory |
+| + | Pause menu |
+| - (short press) | Quick save |
+| - (hold about a second) | Settings overlay (see below) |
 
-A software cursor is drawn in menus because the Switch has none.
+**Menus** (main menu, pause menu, options, load game, keypads...): the **d-pad or left stick jumps from
+button to button**, so there is nothing to aim; **A** selects, **B** goes back. To change a slider, move
+onto it, hold **A** and press left/right on the d-pad. The right stick still moves a free pointer, and the
+touchscreen works too. A green frame shows where the gamepad is, and the bottom of the screen lists the
+buttons for the current screen (turn the hints off in the settings overlay, Controls tab).
 
-**Inventory (and containers such as the clipboard):** the d-pad or left stick jumps between slots.
-Press **A** on an item to pick it up, move to another slot, press **A** again to drop it (no need to
-hold anything); **Y** double-clicks the slot under the cursor (use / equip). The right stick and the
-triggers still work as a free pointer.
+**Inventory and containers** (clipboard, wallet...): the d-pad or left stick jumps between slots.
+
+| Button | Does |
+|---|---|
+| A | Use / open the item under the cursor (a single press: equips it, reads a document, ...) |
+| Y | Pick the item up; move to another slot; press Y again to drop it there |
+| X or B | Close the inventory |
+
+Reading a document: press **A** on it once. Press **A** again to put it away.
+
+A software cursor is drawn in menus because the Switch has none. "Press any key" screens accept A.
 
 ## Settings menu (overlay)
 
