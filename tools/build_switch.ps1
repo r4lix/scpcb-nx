@@ -31,5 +31,7 @@ if ($Sd) {
     foreach ($d in "Data", "GFX", "SFX", "Loadingscreens") {
         robocopy "$root\scpcb\$d" "$dest\$d" /E /NFL /NDL /NJH /NJS /NP | Out-Null
     }
+    # files the upstream checkout lacks (see portssets\README.md)
+    robocopy "$root\portssets" "$dest" /E /NFL /NDL /NJH /NJS /NP | Out-Null
     "copied to $dest"
 }
