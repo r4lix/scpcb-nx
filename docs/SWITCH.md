@@ -53,13 +53,14 @@ Button names are the ones printed on the console.
 | - (short press) | Quick save |
 | - (hold about a second) | Settings overlay (see below) |
 
-**Menus** (main menu, pause menu, options, load game, keypads...): the **d-pad or left stick jumps from
-button to button**, so there is nothing to aim; **A** selects, **B** goes back. To change a slider, move
-onto it, hold **A** and press left/right on the d-pad. The right stick still moves a free pointer, and the
-touchscreen works too. A green frame shows where the gamepad is, and the bottom of the screen lists the
-buttons for the current screen (turn the hints off in the settings overlay, Controls tab).
+**Menus** (main menu, pause menu, options, load game, keypads...): the **left stick moves the cursor**
+(the right stick does too), and the **d-pad jumps to the next button**, which is the easiest way to
+aim; **A** selects, **B** goes back. To change a slider, move onto it, hold **A** and press left/right on
+the d-pad (or drag with the stick). The touchscreen works too. A green frame shows where the gamepad is,
+and the bottom of the screen lists the buttons for the current screen (turn the hints off in the settings
+overlay, Controls tab).
 
-**Inventory and containers** (clipboard, wallet...): the d-pad or left stick jumps between slots.
+**Inventory and containers** (clipboard, wallet...): the left stick moves the cursor and the d-pad jumps between slots.
 
 | Button | Does |
 |---|---|
