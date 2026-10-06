@@ -43,6 +43,9 @@ PATCHES = [
     ("Source Code/Graphics_Core.bb", r"Graphics3D\(Width, Height, Depth, Mode\)", "Graphics3D(Width, Height, Depth, 2)", "the runtime knows window modes 0-3 only; fullscreen is the platform's business"),
     ("Source Code/Strict_Functions_Core.bb", r"(Function RuntimeErrorEx%\(Message\$\)\x0d?\x0a)", lambda m: m.group(1) + "\tRT_Trace(Message)" + chr(10), "log the error text (the TSS error screen is not available)"),
     ("*", r"(<> Null\)?) And ", lambda m: m.group(1) + " Land ", "TSS evaluates a Null guard before the dereference; make it a short-circuit"),
+    ("Source Code/Strict_Functions_Core.bb", r"LoadFont\(File, \(Int\(Height \* \(opt\\GraphicHeight / 1024\.0\)\)\)", lambda m: 'LoadFont(File, (Int(Height * (opt\\GraphicHeight / 1024.0) * FontScaleFor(Height)))', "fonts are 35% larger by default (overlay menu setting font_scale): the stock sizes are unreadable on a handheld screen"),
+    ("Source Code/Math_Core.bb", r"(Function MouseOn%\(x%, y%, Width%, Height%\)\x0d?\x0a)", lambda m: m.group(1) + "\tRT_PadMenuRect(x, y, Width, Height)" + chr(10), "gamepad: every mouse hit-test rectangle is a target for the d-pad / left-stick cursor"),
+    ("Source Code/Main_Core.bb", r"(\x0aRepeat\x0d?\x0a)(\tLocal VidMem%)", lambda m: m.group(1) + "\tRT_PadMenuBegin()" + chr(10) + m.group(2), "gamepad: start collecting this frame's menu rectangles"),
     ("Source Code/Menu_Core.bb", r"TextInput\(((?:[^()]|\([^()]*\))*)\)", lambda m: "TextInputEx(" + m.group(1) + ", Value)", "TextInput needs the typed character: passed explicitly (see port_ue/Compat.bb)"),
 ]
 

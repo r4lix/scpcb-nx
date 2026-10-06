@@ -127,6 +127,12 @@ Function BankPointer%(b%)
 	Return(0)
 End Function
 
+; Small text is what is unreadable on a handheld; the big title fonts only need a little extra to stay inside their buttons.
+Function FontScaleFor#(h%)
+	If h < 30 Then Return(RT_SettingF("font_scale", 1.35))
+	Return(1.15)
+End Function
+
 Function TextInputEx$(s$, v%)
 	If v = 8
 		If Len(s) > 0 Then Return(Left(s, Len(s) - 1))
