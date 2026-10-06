@@ -91,7 +91,24 @@ Function DBG_UpdateDoor()
 	user_camera_pitch = 0.0
 End Function
 
+Global DBG_CodesDone% = False
+
 Function DBG_Update()
+	If DBG_CodesDone = False And RT_SettingI("dbg_codes", 0) <> 0 Then
+		DBG_CodesDone = True
+		Local cd.Doors, c372% = ((Int(AccessCode) * 3) Mod 10000)
+		If c372 < 1000 Then c372 = c372 + 1000
+		RT_Trace("AccessCode=" + AccessCode + " doc372=" + c372)
+		For cd = Each Doors
+			If cd\Code <> "" Then
+				If cd\room <> Null Then
+					RT_Trace("keypad door code=" + cd\Code + " room=" + cd\room\RoomTemplate\Name)
+				Else
+					RT_Trace("keypad door code=" + cd\Code + " room=?")
+				EndIf
+			EndIf
+		Next
+	EndIf
 	DBG_UpdateDoor()
 	DBG_UpdateNpcs()
 	If RT_SettingI("dbg_inv", 0) <> 0 And DBG_InvDone = False Then
@@ -112,7 +129,7 @@ Function DBG_Update()
 		DBG_Frames = DBG_Frames + 1
 		If DBG_Frames > 150 Then
 			DBG_PaperDone = True
-			Local pit.Items = CreateItem("Document SCP-173", "paper", EntityX(Collider), EntityY(Collider), EntityZ(Collider))
+			Local pit.Items = CreateItem(RT_SettingS$("dbg_paper_name", "Document SCP-173"), "paper", EntityX(Collider), EntityY(Collider), EntityZ(Collider))
 			SelectedItem = pit
 		EndIf
 	EndIf

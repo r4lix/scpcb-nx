@@ -18,7 +18,7 @@ if ($LASTEXITCODE -ne 0) { throw "prepare_run failed" }
 
 Set-Location $Out
 [System.IO.File]::Delete("$Out\scpcb.nro")
-& "$env:blitzpath\bin\blitzcc64.exe" -llvm -target nx -o scpcb.nro Main.bb 2>&1 |
+& "$env:blitzpath\bin\blitzcc64.exe" -llvm -target nx -r opengl -o scpcb.nro Main.bb 2>&1 |
     Where-Object { $_ -notmatch '^[%@;]|^\s|^$|^\!|^define|^declare|^\}' } | Select-Object -Last 30
 if (-not (Test-Path "$Out\scpcb.nro")) { throw "scpcb.nro was not produced" }
 "{0}  {1:N1} MB" -f "$Out\scpcb.nro", ((Get-Item "$Out\scpcb.nro").Length / 1MB)
