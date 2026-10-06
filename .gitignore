@@ -5,3 +5,6 @@ tests/*.png
 blitz3d-ng/build/
 build/
 "tests/*.wav" 
+run_ue/
+run2/
+tests/ueshot*
